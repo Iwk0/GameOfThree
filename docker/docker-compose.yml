@@ -1,0 +1,29 @@
+version: '3.6'
+services:   
+   game_of_three:
+       image: openjdk:11
+       logging:
+         options:
+           max-size: 50m
+       command: bash -c "java -jar /game/game_of_three.jar"
+       environment:
+         divider: 4
+       volumes:
+         - ./:/game
+       restart: always
+       container_name: game_of_three
+       ports:
+         - "8080:8080"
+   nginx:
+       image: nginx
+       logging:
+         options:
+            max-size: 50m
+       volumes:
+         - ./nginx/game-of-three:/usr/share/nginx/html
+         - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+       depends_on:
+         - game_of_three
+       container_name: nginx
+       ports:
+         - "80:80"
