@@ -14,7 +14,7 @@ import java.security.Principal;
 @Log4j2
 @Component
 @RequiredArgsConstructor
-public class WebSocketSessionListener {
+class WebSocketSessionListener {
 
     private final LobbyService lobbyService;
 
