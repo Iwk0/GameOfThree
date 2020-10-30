@@ -33,6 +33,7 @@ public class LobbyService {
                             log.info("New lobby was created.");
                             Player player = new Player(playerName);
                             lobbies.add(new Lobby(player));
+                            log.info("Active lobbies: " + lobbies.size());
                         }
                 );
     }
@@ -51,6 +52,7 @@ public class LobbyService {
         lobbies.remove(lobby);
 
         log.info("Lobby was successfully deleted.");
+        log.info("Remaining lobbies: " + lobbies.size());
     }
 
     public void connectionEstablished(String playerName) {
