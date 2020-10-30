@@ -72,8 +72,13 @@ public class LobbyService {
                 gameSetup
         );
 
+        Player playerTwo = lobby.getPlayerTwo();
+        if (playerTwo == null) {
+            return;
+        }
+
         simpMessagingTemplate.convertAndSendToUser(
-                lobby.getPlayerTwo().getName(),
+                playerTwo.getName(),
                 "/notification/game-setup",
                 gameSetup
         );
@@ -84,6 +89,17 @@ public class LobbyService {
                 .stream()
                 .filter(lobby -> !lobby.isReady())
                 .findFirst();
+    }
+
+    public Set<Lobby> findByType(Type type) {
+        return lobbies
+                .stream()
+                .filter(Lobby::isReady)
+                .filter(lobby ->
+                        type == lobby.getPlayerOne().getType() ||
+                                type == lobby.getPlayerTwo().getType()
+                )
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     public Optional<Lobby> findByPlayerName(String playerName) {
